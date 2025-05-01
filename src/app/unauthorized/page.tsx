@@ -1,18 +1,18 @@
 
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 
 export default function UnauthorizedPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { user } = useAuth();
   
   const handleGoBack = () => {
     if (user) {
-      router.push(`/dashboard/${user.role}`);
+      navigate(`/dashboard/${user.role}`);
     } else {
-      router.push('/login');
+      navigate('/login');
     }
   };
   

@@ -2,8 +2,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
   LucideIcon, 
@@ -90,7 +89,8 @@ interface SidebarMenuProps {
 
 export function SidebarMenu({ collapsed = false }: SidebarMenuProps) {
   const { user, logout } = useAuth();
-  const pathname = usePathname();
+  const location = useLocation();
+  const pathname = location.pathname;
 
   const isActive = useCallback(
     (href: string) => {
@@ -115,7 +115,7 @@ export function SidebarMenu({ collapsed = false }: SidebarMenuProps) {
       {filteredMenu.map((item) => (
         <Link
           key={item.href}
-          href={item.title === 'Dashboard' ? `/dashboard/${user.role}` : item.href}
+          to={item.title === 'Dashboard' ? `/dashboard/${user.role}` : item.href}
           className={cn(
             "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-medical-100 hover:text-medical-900",
             isActive(item.href) ? "bg-medical-100 text-medical-900" : "text-muted-foreground"

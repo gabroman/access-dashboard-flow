@@ -1,6 +1,6 @@
 
 import jwt from 'jsonwebtoken';
-import { cookies } from 'next/headers';
+import Cookies from 'js-cookie';
 import { DecodedToken, User, UserRole } from '@/types/auth';
 
 const TOKEN_NAME = 'auth_token';
@@ -20,11 +20,9 @@ export function generateToken(user: { id: string; name: string; email: string; r
   );
 }
 
-// Get token from cookie
+// Get token from cookie (client-side)
 export function getToken(): string | undefined {
-  const cookieStore = cookies();
-  const token = cookieStore.get(TOKEN_NAME)?.value;
-  return token;
+  return Cookies.get(TOKEN_NAME);
 }
 
 // Verify and decode the token

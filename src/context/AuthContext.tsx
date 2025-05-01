@@ -2,7 +2,7 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
 import { AuthState, DecodedToken, LoginCredentials, User, UserRole } from '@/types/auth';
@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthenticated: false,
     isLoading: true,
   });
-  const router = useRouter();
+  const navigate = useNavigate();
 
   // Initialize auth state from token
   useEffect(() => {
@@ -109,7 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
 
       // Redirect to role-specific dashboard
-      router.push(`/dashboard/${user.role}`);
+      navigate(`/dashboard/${user.role}`);
       return true;
     }
 
@@ -124,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: false,
       isLoading: false,
     });
-    router.push('/login');
+    navigate('/login');
   };
 
   // Set user function (for testing)
